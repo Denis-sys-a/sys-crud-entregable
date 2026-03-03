@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema CRUD de Películas</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <h1>Sistema CRUD de Películas</h1>
+      <section class="card">
+        <form id="movie-form" class="panel form-panel">
+          <h2>Registrar película</h2>
+          <input type="hidden" id="movie-id" />
+
+          <label>Título <input id="title" required /></label>
+          <label>Director <input id="director" required /></label>
+          <label>Género <input id="genre" required /></label>
+
+          <div class="row-2">
+            <label>Año de estreno <input id="year" type="number" required /></label>
+            <label>Duración (min) <input id="durationMin" type="number" required /></label>
+          </div>
+
+          <label>
+            Clasificación
+            <select id="classification" required>
+              <option value="">Seleccione</option>
+              <option value="G">G</option>
+              <option value="PG">PG</option>
+              <option value="PG-13">PG-13</option>
+              <option value="R">R</option>
+              <option value="NC-17">NC-17</option>
+            </select>
+          </label>
+
+          <label>Sinopsis <textarea id="synopsis" rows="4" required></textarea></label>
+          <label>URL póster (opcional) <input id="posterUrl" /></label>
+
+          <button type="submit" class="primary" id="submit-btn">Guardar película</button>
+        </form>
+
+        <section class="panel table-panel">
+          <div class="table-header">
+            <h2>Catalogo de peliculas geniales</h2>
+            <select id="order-by">
+              <option value="id">Orden: Inserción</option>
+              <option value="title">Orden: Título</option>
+              <option value="year">Orden: Año</option>
+              <option value="duration">Orden: Duración</option>
+            </select>
+          </div>
+          <p>Total de películas: <strong id="total">0</strong></p>
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Título</th>
+                <th>Director</th>
+                <th>Género</th>
+                <th>Año</th>
+                <th>Duración</th>
+                <th>Clasificación</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="movies-body"></tbody>
+          </table>
+        </section>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
