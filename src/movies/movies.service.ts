@@ -2,7 +2,9 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { Movie } from './entities/movie.entity';
-import { MOVIE_REPOSITORY, MovieRepository } from './repositories/movie.repository';
+import { MOVIE_REPOSITORY } from './repositories/movie.repository';
+// `MovieRepository` es solo un tipo: usar `import type` evita TS1272 con decorators metadata.
+import type { MovieRepository } from './repositories/movie.repository';
 import {
   MovieSortStrategy,
   SortByDurationStrategy,

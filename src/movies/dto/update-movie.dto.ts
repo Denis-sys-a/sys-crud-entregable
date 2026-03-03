@@ -1,5 +1,6 @@
 import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
-import { MovieClassification } from '../entities/movie.entity';
+
+type MovieClassificationDto = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
 
 export class UpdateMovieDto {
   @IsOptional()
@@ -28,7 +29,7 @@ export class UpdateMovieDto {
 
   @IsOptional()
   @IsString()
-  classification?: MovieClassification;
+  classification?: MovieClassificationDto;
 
   @IsOptional()
   @IsString()

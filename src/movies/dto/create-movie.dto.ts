@@ -1,5 +1,6 @@
 import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
-import { MovieClassification } from '../entities/movie.entity';
+
+type MovieClassificationDto = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
 
 export class CreateMovieDto {
   @IsString()
@@ -22,7 +23,7 @@ export class CreateMovieDto {
   durationMin!: number;
 
   @IsString()
-  classification!: MovieClassification;
+  classification!: MovieClassificationDto;
 
   @IsString()
   synopsis!: string;
