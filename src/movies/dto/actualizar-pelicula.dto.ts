@@ -5,7 +5,7 @@ type PeliculaClassificationDto = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
 export class UpdatePeliculaDto {
   @IsOptional()
   @IsString()
-  title?: string;
+  titulo?: string;
 
   @IsOptional()
   @IsString()
@@ -13,27 +13,27 @@ export class UpdatePeliculaDto {
 
   @IsOptional()
   @IsString()
-  genre?: string;
+  genero?: string;
 
   @IsOptional()
   @IsInt()
   @Min(1888)
   @Max(2100)
-  year?: number;
+  anio?: number;
 
   @IsOptional()
   @IsInt()
   @Min(1)
   @Max(600)
-  durationMin?: number;
+  duracionMin?: number;
 
   @IsOptional()
   @IsString()
-  classification?: PeliculaClassificationDto;
+  clasificacion?: PeliculaClassificationDto;
 
   @IsOptional()
   @IsString()
-  synopsis?: string;
+  sinopsis?: string;
 
   @IsOptional()
   @IsString()

@@ -16,8 +16,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
 import { existsSync, mkdirSync } from 'fs';
-import { CreatePeliculaDto } from './dto/create-pelicula.dto';
-import { UpdatePeliculaDto } from './dto/update-pelicula.dto';
+import { CreatePeliculaDto } from './dto/crear-pelicula.dto';
+import { UpdatePeliculaDto } from './dto/actualizar-pelicula.dto';
 import { PeliculasService } from './peliculas.service';
 
 const posterDirectory = join(process.cwd(), 'public', 'img');

@@ -17,18 +17,18 @@
           </div>
           <input type="hidden" id="pelicula-id" />
 
-          <label>Título <input id="title" required /></label>
+          <label>Título <input id="titulo" required /></label>
           <label>Director <input id="director" required /></label>
-          <label>Género <input id="genre" required /></label>
+          <label>Género <input id="genero" required /></label>
 
           <div class="row-2">
-            <label>Año de estreno <input id="year" type="number" required /></label>
-            <label>Duración (min) <input id="durationMin" type="number" required /></label>
+            <label>Año de estreno <input id="anio" type="number" required /></label>
+            <label>Duración (min) <input id="duracionMin" type="number" required /></label>
           </div>
 
           <label>
             Clasificación
-            <select id="classification" required>
+            <select id="clasificacion" required>
               <option value="">Seleccione</option>
               <option value="G">G</option>
               <option value="PG">PG</option>
@@ -38,7 +38,7 @@
             </select>
           </label>
 
-          <label>Sinopsis <textarea id="synopsis" rows="4" required></textarea></label>
+          <label>Sinopsis <textarea id="sinopsis" rows="4" required></textarea></label>
           <label>
             Cartel de la película (opcional)
             <input id="posterFile" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
@@ -54,9 +54,9 @@
             <h2>Catalogo de peliculas geniales</h2>
             <select id="order-by">
               <option value="id">Orden: Inserción</option>
-              <option value="title">Orden: Título</option>
-              <option value="year">Orden: Año</option>
-              <option value="duration">Orden: Duración</option>
+              <option value="titulo">Orden: Título</option>
+              <option value="anio">Orden: Año</option>
+              <option value="duracion">Orden: Duración</option>
             </select>
           </div>
           <p>Total de películas: <strong id="total">0</strong></p>

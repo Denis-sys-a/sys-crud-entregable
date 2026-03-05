@@ -4,20 +4,20 @@ export interface PeliculaSortStrategy {
   sort(peliculas: Pelicula[]): Pelicula[];
 }
 
-export class SortByTitleStrategy implements PeliculaSortStrategy {
+export class SortByTituloStrategy implements PeliculaSortStrategy {
   sort(peliculas: Pelicula[]): Pelicula[] {
-    return [...peliculas].sort((a, b) => a.title.localeCompare(b.title));
+    return [...peliculas].sort((a, b) => a.titulo.localeCompare(b.titulo));
   }
 }
 
-export class SortByYearStrategy implements PeliculaSortStrategy {
+export class SortByAnioStrategy implements PeliculaSortStrategy {
   sort(peliculas: Pelicula[]): Pelicula[] {
-    return [...peliculas].sort((a, b) => b.year - a.year);
+    return [...peliculas].sort((a, b) => b.anio - a.anio);
   }
 }
 
-export class SortByDurationStrategy implements PeliculaSortStrategy {
+export class SortByDuracionStrategy implements PeliculaSortStrategy {
   sort(peliculas: Pelicula[]): Pelicula[] {
-    return [...peliculas].sort((a, b) => b.durationMin - a.durationMin);
+    return [...peliculas].sort((a, b) => b.duracionMin - a.duracionMin);
   }
 }

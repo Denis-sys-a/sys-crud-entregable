@@ -9,13 +9,13 @@ function getPeliculaIdFromQuery() {
 
 function renderPelicula(pelicula) {
   detailsInfo.innerHTML = `
-    <p><strong>Título:</strong> ${pelicula.title}</p>
+    <p><strong>Título:</strong> ${pelicula.titulo}</p>
     <p><strong>Director:</strong> ${pelicula.director}</p>
-    <p><strong>Género:</strong> ${pelicula.genre}</p>
-    <p><strong>Año:</strong> ${pelicula.year}</p>
-    <p><strong>Duración:</strong> ${pelicula.durationMin} min</p>
-    <p><strong>Clasificación:</strong> ${pelicula.classification}</p>
-    <p><strong>Sinopsis:</strong> ${pelicula.synopsis}</p>
+    <p><strong>Género:</strong> ${pelicula.genero}</p>
+    <p><strong>Año:</strong> ${pelicula.anio}</p>
+    <p><strong>Duración:</strong> ${pelicula.duracionMin} min</p>
+    <p><strong>Clasificación:</strong> ${pelicula.clasificacion}</p>
+    <p><strong>Sinopsis:</strong> ${pelicula.sinopsis}</p>
   `;
 
   detailsPoster.src = pelicula.posterUrl || 'https://via.placeholder.com/280x420?text=Sin+poster';

@@ -24,17 +24,17 @@ function renderPeliculas(peliculas) {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${index + 1}</td>
-      <td>${pelicula.title}</td>
+      <td>${pelicula.titulo}</td>
       <td>${pelicula.director}</td>
-      <td>${pelicula.genre}</td>
-      <td>${pelicula.year}</td>
-      <td>${pelicula.durationMin} min</td>
-      <td>${pelicula.classification}</td>
+      <td>${pelicula.genero}</td>
+      <td>${pelicula.anio}</td>
+      <td>${pelicula.duracionMin} min</td>
+      <td>${pelicula.clasificacion}</td>
       <td>
         <div class="actions">
-          <button class="btn btn-view" data-action="view" data-id="${pelicula.id}" title="Ver detalles">👀</button>
-          <button class="btn btn-edit" data-action="edit" data-id="${pelicula.id}" title="Editar">🖊️</button>
-          <button class="btn btn-delete" data-action="delete" data-id="${pelicula.id}" title="Eliminar">🗑️</button>
+          <button class="btn btn-view" data-action="view" data-id="${pelicula.id}" titulo="Ver detalles">👀</button>
+          <button class="btn btn-edit" data-action="edit" data-id="${pelicula.id}" titulo="Editar">🖊️</button>
+          <button class="btn btn-delete" data-action="delete" data-id="${pelicula.id}" titulo="Eliminar">🗑️</button>
         </div>
       </td>
     `;
@@ -79,26 +79,26 @@ async function getPayload() {
   const posterUrl = await uploadPosterIfNeeded();
 
   return {
-    title: document.getElementById('title').value,
+    titulo: document.getElementById('titulo').value,
     director: document.getElementById('director').value,
-    genre: document.getElementById('genre').value,
-    year: Number(document.getElementById('year').value),
-    durationMin: Number(document.getElementById('durationMin').value),
-    classification: document.getElementById('classification').value,
-    synopsis: document.getElementById('synopsis').value,
+    genero: document.getElementById('genero').value,
+    anio: Number(document.getElementById('anio').value),
+    duracionMin: Number(document.getElementById('duracionMin').value),
+    clasificacion: document.getElementById('clasificacion').value,
+    sinopsis: document.getElementById('sinopsis').value,
     posterUrl,
   };
 }
 
 function fillForm(pelicula) {
   document.getElementById('pelicula-id').value = pelicula.id;
-  document.getElementById('title').value = pelicula.title;
+  document.getElementById('titulo').value = pelicula.titulo;
   document.getElementById('director').value = pelicula.director;
-  document.getElementById('genre').value = pelicula.genre;
-  document.getElementById('year').value = pelicula.year;
-  document.getElementById('durationMin').value = pelicula.durationMin;
-  document.getElementById('classification').value = pelicula.classification;
-  document.getElementById('synopsis').value = pelicula.synopsis;
+  document.getElementById('genero').value = pelicula.genero;
+  document.getElementById('anio').value = pelicula.anio;
+  document.getElementById('duracionMin').value = pelicula.duracionMin;
+  document.getElementById('clasificacion').value = pelicula.clasificacion;
+  document.getElementById('sinopsis').value = pelicula.sinopsis;
   posterFileInput.value = '';
   currentPosterUrl = pelicula.posterUrl || '';
   renderCurrentPosterInfo();

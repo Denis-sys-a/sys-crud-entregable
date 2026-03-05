@@ -1,15 +1,15 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { CreatePeliculaDto } from './dto/create-pelicula.dto';
-import { UpdatePeliculaDto } from './dto/update-pelicula.dto';
+import { CreatePeliculaDto } from './dto/crear-pelicula.dto';
+import { UpdatePeliculaDto } from './dto/actualizar-pelicula.dto';
 import { Pelicula } from './entities/pelicula.entity';
 import { PELICULA_REPOSITORY } from './repositories/pelicula.repository';
 // `PeliculaRepository` es solo un tipo: usar `import type` evita TS1272 con decorators metadata.
 import type { PeliculaRepository } from './repositories/pelicula.repository';
 import {
   PeliculaSortStrategy,
-  SortByDurationStrategy,
-  SortByTitleStrategy,
-  SortByYearStrategy,
+  SortByDuracionStrategy,
+  SortByTituloStrategy,
+  SortByAnioStrategy,
 } from './strategies/pelicula-sort.strategy';
 
 @Injectable()
@@ -41,13 +41,13 @@ export class PeliculasService {
 
   create(dto: CreatePeliculaDto): Promise<Pelicula> {
     return this.repository.create({
-      title: dto.title,
+      titulo: dto.titulo,
       director: dto.director,
-      genre: dto.genre,
-      year: dto.year,
-      durationMin: dto.durationMin,
-      classification: dto.classification,
-      synopsis: dto.synopsis,
+      genero: dto.genero,
+      anio: dto.anio,
+      duracionMin: dto.duracionMin,
+      clasificacion: dto.clasificacion,
+      sinopsis: dto.sinopsis,
       posterUrl: dto.posterUrl,
     });
   }
@@ -70,12 +70,12 @@ export class PeliculasService {
 
   private getSortStrategy(orderBy: string): PeliculaSortStrategy | null {
     switch (orderBy) {
-      case 'title':
-        return new SortByTitleStrategy();
-      case 'year':
-        return new SortByYearStrategy();
-      case 'duration':
-        return new SortByDurationStrategy();
+      case 'titulo':
+        return new SortByTituloStrategy();
+      case 'anio':
+        return new SortByAnioStrategy();
+      case 'duracion':
+        return new SortByDuracionStrategy();
       default:
         return null;
     }

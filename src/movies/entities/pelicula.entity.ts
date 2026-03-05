@@ -2,24 +2,24 @@ export type PeliculaClassification = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
 
 export class Pelicula {
   id: number;
-  title: string;
+  titulo: string;
   director: string;
-  genre: string;
-  year: number;
-  durationMin: number;
-  classification: PeliculaClassification;
-  synopsis: string;
+  genero: string;
+  anio: number;
+  duracionMin: number;
+  clasificacion: PeliculaClassification;
+  sinopsis: string;
   posterUrl?: string;
 
   constructor(data: Omit<Pelicula, 'id'> & { id?: number }) {
     this.id = data.id ?? 0;
-    this.title = data.title;
+    this.titulo = data.titulo;
     this.director = data.director;
-    this.genre = data.genre;
-    this.year = data.year;
-    this.durationMin = data.durationMin;
-    this.classification = data.classification;
-    this.synopsis = data.synopsis;
+    this.genero = data.genero;
+    this.anio = data.anio;
+    this.duracionMin = data.duracionMin;
+    this.clasificacion = data.clasificacion;
+    this.sinopsis = data.sinopsis;
     this.posterUrl = data.posterUrl;
   }
 }

@@ -4,29 +4,29 @@ type PeliculaClassificationDto = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
 
 export class CreatePeliculaDto {
   @IsString()
-  title!: string;
+  titulo!: string;
 
   @IsString()
   director!: string;
 
   @IsString()
-  genre!: string;
+  genero!: string;
 
   @IsInt()
   @Min(1888)
   @Max(2100)
-  year!: number;
+  anio!: number;
 
   @IsInt()
   @Min(1)
   @Max(600)
-  durationMin!: number;
+  duracionMin!: number;
 
   @IsString()
-  classification!: PeliculaClassificationDto;
+  clasificacion!: PeliculaClassificationDto;
 
   @IsString()
-  synopsis!: string;
+  sinopsis!: string;
 
   @IsOptional()
   @IsString()
