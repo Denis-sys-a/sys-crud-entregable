@@ -16,6 +16,17 @@ h1 { text-align: center; color: #131313; font-size: 48px; margin: 8px 0 18px; }
   gap: 12px;
 }
 .panel { background: #efefef; border-radius: 10px; padding: 10px; }
+.form-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.form-header h2 { margin: 0; }
+.link-btn {
+  border: none;
+  background: transparent;
+  color: #1f6feb;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+}
 .form-panel label { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
 input, textarea, select {
   width: 100%;
@@ -46,9 +57,42 @@ th { color: #005555; }
 .btn-view { background: #14a3d9; }
 .btn-edit { background: #f2be1a; color: #111; }
 .btn-delete { background: #db2f45; }
+
+.details-page { max-width: 1300px; }
+.details-card { display: block; padding: 18px; }
+.back-btn {
+  border: 1px solid #9f9f9f;
+  background: #f1f1f1;
+  border-radius: 6px;
+  padding: 8px 16px;
+  color: #666;
+  cursor: pointer;
+}
+.details-layout {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 18px;
+}
+.details-info p {
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #c9c9c9;
+  line-height: 1.35;
+}
+.poster-wrap { display: flex; align-items: flex-start; justify-content: center; }
+.poster-wrap img {
+  width: 100%;
+  max-width: 280px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
 @media (max-width: 1080px) {
   .card { grid-template-columns: 1fr; }
   h1 { font-size: 34px; }
   .table-panel h2 { font-size: 30px; }
   table { font-size: 16px; }
 }
+  .details-layout { grid-template-columns: 1fr; }
+  .poster-wrap { justify-content: flex-start; }

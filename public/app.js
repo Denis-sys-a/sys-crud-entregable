@@ -3,6 +3,7 @@ const form = document.getElementById('movie-form');
 const tbody = document.getElementById('movies-body');
 const total = document.getElementById('total');
 const orderBy = document.getElementById('order-by');
+const clearBtn = document.getElementById('clear-btn');
 
 async function fetchMovies() {
   const query = orderBy.value && orderBy.value !== 'id' ? `?orderBy=${orderBy.value}` : '';
@@ -27,9 +28,9 @@ function renderMovies(movies) {
       <td>${movie.classification}</td>
       <td>
         <div class="actions">
-          <button class="btn btn-view" data-action="view" data-id="${movie.id}">👁</button>
-          <button class="btn btn-edit" data-action="edit" data-id="${movie.id}">✏</button>
-          <button class="btn btn-delete" data-action="delete" data-id="${movie.id}">🗑</button>
+          <button class="btn btn-view" data-action="view" data-id="${movie.id}" title="Ver detalles">👀</button>
+          <button class="btn btn-edit" data-action="edit" data-id="${movie.id}" title="Editar">🖊️</button>
+          <button class="btn btn-delete" data-action="delete" data-id="${movie.id}" title="Eliminar">🗑️</button>
         </div>
       </td>
     `;
@@ -93,6 +94,10 @@ form.addEventListener('submit', async (event) => {
   fetchMovies();
 });
 
+clearBtn.addEventListener('click', () => {
+  resetForm();
+});
+
 tbody.addEventListener('click', async (event) => {
   const button = event.target.closest('button');
   if (!button) return;
@@ -101,6 +106,14 @@ tbody.addEventListener('click', async (event) => {
   const action = button.dataset.action;
 
   if (action === 'delete') {
+    const shouldDelete = window.confirm(
+      '¿Seguro que deseas eliminar esta película?\n\nPresiona "Aceptar" para eliminar o "Cancelar" para mantenerla.',
+    );
+
+    if (!shouldDelete) {
+      return;
+    }
+
     await fetch(`${api}/${id}`, { method: 'DELETE' });
     fetchMovies();
   }
@@ -112,9 +125,7 @@ tbody.addEventListener('click', async (event) => {
   }
 
   if (action === 'view') {
-    const response = await fetch(`${api}/${id}`);
-    const movie = await response.json();
-    alert(`${movie.title}\n\n${movie.synopsis}`);
+    window.location.href = `/details.html?id=${id}`;
   }
 });
 

@@ -11,7 +11,10 @@
       <h1>Sistema CRUD de Películas</h1>
       <section class="card">
         <form id="movie-form" class="panel form-panel">
-          <h2>Registrar película</h2>
+          <div class="form-header">
+            <h2>Registrar película</h2>
+            <button type="button" id="clear-btn" class="link-btn" title="Cancelar edición y limpiar formulario">↻ Limpiar</button>
+          </div>
           <input type="hidden" id="movie-id" />
 
           <label>Título <input id="title" required /></label>
