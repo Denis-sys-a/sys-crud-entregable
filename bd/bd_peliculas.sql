@@ -1,4 +1,4 @@
--- Ejecuta este script en MySQL Workbench
+-- Ejecutar este script en MySQL Workbench
 CREATE DATABASE IF NOT EXISTS bd_peliculas
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
@@ -19,3 +19,7 @@ CREATE TABLE IF NOT EXISTS peliculas (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+--Consulta para ver los campos
+USE bd_peliculas;
+SELECT * FROM peliculas;
