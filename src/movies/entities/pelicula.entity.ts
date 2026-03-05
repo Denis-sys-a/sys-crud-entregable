@@ -1,17 +1,17 @@
-export type MovieClassification = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
+export type PeliculaClassification = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
 
-export class Movie {
+export class Pelicula {
   id: number;
   title: string;
   director: string;
   genre: string;
   year: number;
   durationMin: number;
-  classification: MovieClassification;
+  classification: PeliculaClassification;
   synopsis: string;
   posterUrl?: string;
 
-  constructor(data: Omit<Movie, 'id'> & { id?: number }) {
+  constructor(data: Omit<Pelicula, 'id'> & { id?: number }) {
     this.id = data.id ?? 0;
     this.title = data.title;
     this.director = data.director;

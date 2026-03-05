@@ -1,28 +1,28 @@
-const api = '/api/movies';
+const api = '/api/peliculas';
 const detailsInfo = document.getElementById('details-info');
 const detailsPoster = document.getElementById('details-poster');
 
-function getMovieIdFromQuery() {
+function getPeliculaIdFromQuery() {
   const params = new URLSearchParams(window.location.search);
   return params.get('id');
 }
 
-function renderMovie(movie) {
+function renderPelicula(pelicula) {
   detailsInfo.innerHTML = `
-    <p><strong>Título:</strong> ${movie.title}</p>
-    <p><strong>Director:</strong> ${movie.director}</p>
-    <p><strong>Género:</strong> ${movie.genre}</p>
-    <p><strong>Año:</strong> ${movie.year}</p>
-    <p><strong>Duración:</strong> ${movie.durationMin} min</p>
-    <p><strong>Clasificación:</strong> ${movie.classification}</p>
-    <p><strong>Sinopsis:</strong> ${movie.synopsis}</p>
+    <p><strong>Título:</strong> ${pelicula.title}</p>
+    <p><strong>Director:</strong> ${pelicula.director}</p>
+    <p><strong>Género:</strong> ${pelicula.genre}</p>
+    <p><strong>Año:</strong> ${pelicula.year}</p>
+    <p><strong>Duración:</strong> ${pelicula.durationMin} min</p>
+    <p><strong>Clasificación:</strong> ${pelicula.classification}</p>
+    <p><strong>Sinopsis:</strong> ${pelicula.synopsis}</p>
   `;
 
-  detailsPoster.src = movie.posterUrl || 'https://via.placeholder.com/280x420?text=Sin+poster';
+  detailsPoster.src = pelicula.posterUrl || 'https://via.placeholder.com/280x420?text=Sin+poster';
 }
 
-async function loadMovie() {
-  const id = getMovieIdFromQuery();
+async function loadPelicula() {
+  const id = getPeliculaIdFromQuery();
   if (!id) {
     detailsInfo.innerHTML = '<p>No se encontró el id de la película.</p>';
     detailsPoster.style.display = 'none';
@@ -34,12 +34,12 @@ async function loadMovie() {
     if (!response.ok) {
       throw new Error('No se pudo cargar la película');
     }
-    const movie = await response.json();
-    renderMovie(movie);
+    const pelicula = await response.json();
+    renderPelicula(pelicula);
   } catch (error) {
     detailsInfo.innerHTML = '<p>No se pudo cargar la información de la película.</p>';
     detailsPoster.style.display = 'none';
   }
 }
 
-loadMovie();
+loadPelicula();

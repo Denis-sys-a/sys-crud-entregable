@@ -10,12 +10,12 @@
     <main class="page">
       <h1>Sistema CRUD de Películas</h1>
       <section class="card">
-        <form id="movie-form" class="panel form-panel">
+        <form id="pelicula-form" class="panel form-panel">
           <div class="form-header">
             <h2>Registrar película</h2>
             <button type="button" id="clear-btn" class="link-btn" title="Cancelar edición y limpiar formulario">↻ Limpiar</button>
           </div>
-          <input type="hidden" id="movie-id" />
+          <input type="hidden" id="pelicula-id" />
 
           <label>Título <input id="title" required /></label>
           <label>Director <input id="director" required /></label>
@@ -39,7 +39,12 @@
           </label>
 
           <label>Sinopsis <textarea id="synopsis" rows="4" required></textarea></label>
-          <label>URL póster (opcional) <input id="posterUrl" /></label>
+          <label>
+            Cartel de la película (opcional)
+            <input id="posterFile" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
+            <small class="hint">Formatos permitidos: JPG, PNG o WEBP.</small>
+            <small id="current-poster" class="hint current-poster"></small>
+          </label>
 
           <button type="submit" class="primary" id="submit-btn">Guardar película</button>
         </form>
@@ -68,7 +73,7 @@
                 <th>Acciones</th>
               </tr>
             </thead>
-            <tbody id="movies-body"></tbody>
+            <tbody id="peliculas-body"></tbody>
           </table>
         </section>
       </section>

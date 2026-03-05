@@ -28,6 +28,14 @@ h1 { text-align: center; color: #131313; font-size: 48px; margin: 8px 0 18px; }
   padding: 0;
 }
 .form-panel label { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.hint {
+  margin-top: 4px;
+  color: #666;
+  font-size: 13px;
+}
+.current-poster {
+  color: #4b4b4b;
+}
 input, textarea, select {
   width: 100%;
   border: 1px solid #c5c5c5;
@@ -93,6 +101,6 @@ th { color: #005555; }
   h1 { font-size: 34px; }
   .table-panel h2 { font-size: 30px; }
   table { font-size: 16px; }
-}
   .details-layout { grid-template-columns: 1fr; }
   .poster-wrap { justify-content: flex-start; }
+}

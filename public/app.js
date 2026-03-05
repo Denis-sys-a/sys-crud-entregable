@@ -1,36 +1,40 @@
-const api = '/api/movies';
-const form = document.getElementById('movie-form');
-const tbody = document.getElementById('movies-body');
+const api = '/api/peliculas';
+const form = document.getElementById('pelicula-form');
+const tbody = document.getElementById('peliculas-body');
 const total = document.getElementById('total');
 const orderBy = document.getElementById('order-by');
 const clearBtn = document.getElementById('clear-btn');
+const posterFileInput = document.getElementById('posterFile');
+const currentPosterElement = document.getElementById('current-poster');
 
-async function fetchMovies() {
+let currentPosterUrl = '';
+
+async function fetchPeliculas() {
   const query = orderBy.value && orderBy.value !== 'id' ? `?orderBy=${orderBy.value}` : '';
   const response = await fetch(`${api}${query}`);
-  const movies = await response.json();
-  renderMovies(movies);
+  const peliculas = await response.json();
+  renderPeliculas(peliculas);
 }
 
-function renderMovies(movies) {
-  total.textContent = movies.length;
+function renderPeliculas(peliculas) {
+  total.textContent = peliculas.length;
   tbody.innerHTML = '';
 
-  movies.forEach((movie, index) => {
+  peliculas.forEach((pelicula, index) => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${index + 1}</td>
-      <td>${movie.title}</td>
-      <td>${movie.director}</td>
-      <td>${movie.genre}</td>
-      <td>${movie.year}</td>
-      <td>${movie.durationMin} min</td>
-      <td>${movie.classification}</td>
+      <td>${pelicula.title}</td>
+      <td>${pelicula.director}</td>
+      <td>${pelicula.genre}</td>
+      <td>${pelicula.year}</td>
+      <td>${pelicula.durationMin} min</td>
+      <td>${pelicula.classification}</td>
       <td>
         <div class="actions">
-          <button class="btn btn-view" data-action="view" data-id="${movie.id}" title="Ver detalles">👀</button>
-          <button class="btn btn-edit" data-action="edit" data-id="${movie.id}" title="Editar">🖊️</button>
-          <button class="btn btn-delete" data-action="delete" data-id="${movie.id}" title="Eliminar">🗑️</button>
+          <button class="btn btn-view" data-action="view" data-id="${pelicula.id}" title="Ver detalles">👀</button>
+          <button class="btn btn-edit" data-action="edit" data-id="${pelicula.id}" title="Editar">🖊️</button>
+          <button class="btn btn-delete" data-action="delete" data-id="${pelicula.id}" title="Eliminar">🗑️</button>
         </div>
       </td>
     `;
@@ -39,7 +43,41 @@ function renderMovies(movies) {
   });
 }
 
-function getPayload() {
+function renderCurrentPosterInfo() {
+  if (currentPosterUrl) {
+    currentPosterElement.textContent = `Imagen actual: ${currentPosterUrl}`;
+    return;
+  }
+
+  currentPosterElement.textContent = '';
+}
+
+async function uploadPosterIfNeeded() {
+  const posterFile = posterFileInput.files[0];
+
+  if (!posterFile) {
+    return currentPosterUrl || undefined;
+  }
+
+  const formData = new FormData();
+  formData.append('poster', posterFile);
+
+  const response = await fetch(`${api}/upload`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error('No se pudo subir la imagen del cartel.');
+  }
+
+  const data = await response.json();
+  return data.posterUrl;
+}
+
+async function getPayload() {
+  const posterUrl = await uploadPosterIfNeeded();
+
   return {
     title: document.getElementById('title').value,
     director: document.getElementById('director').value,
@@ -48,50 +86,60 @@ function getPayload() {
     durationMin: Number(document.getElementById('durationMin').value),
     classification: document.getElementById('classification').value,
     synopsis: document.getElementById('synopsis').value,
-    posterUrl: document.getElementById('posterUrl').value || undefined,
+    posterUrl,
   };
 }
 
-function fillForm(movie) {
-  document.getElementById('movie-id').value = movie.id;
-  document.getElementById('title').value = movie.title;
-  document.getElementById('director').value = movie.director;
-  document.getElementById('genre').value = movie.genre;
-  document.getElementById('year').value = movie.year;
-  document.getElementById('durationMin').value = movie.durationMin;
-  document.getElementById('classification').value = movie.classification;
-  document.getElementById('synopsis').value = movie.synopsis;
-  document.getElementById('posterUrl').value = movie.posterUrl || '';
+function fillForm(pelicula) {
+  document.getElementById('pelicula-id').value = pelicula.id;
+  document.getElementById('title').value = pelicula.title;
+  document.getElementById('director').value = pelicula.director;
+  document.getElementById('genre').value = pelicula.genre;
+  document.getElementById('year').value = pelicula.year;
+  document.getElementById('durationMin').value = pelicula.durationMin;
+  document.getElementById('classification').value = pelicula.classification;
+  document.getElementById('synopsis').value = pelicula.synopsis;
+  posterFileInput.value = '';
+  currentPosterUrl = pelicula.posterUrl || '';
+  renderCurrentPosterInfo();
   document.getElementById('submit-btn').textContent = 'Actualizar película';
 }
 
 function resetForm() {
   form.reset();
-  document.getElementById('movie-id').value = '';
+  document.getElementById('pelicula-id').value = '';
+  posterFileInput.value = '';
+  currentPosterUrl = '';
+  renderCurrentPosterInfo();
   document.getElementById('submit-btn').textContent = 'Guardar película';
 }
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const id = document.getElementById('movie-id').value;
-  const payload = getPayload();
+  const id = document.getElementById('pelicula-id').value;
 
-  if (id) {
-    await fetch(`${api}/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-  } else {
-    await fetch(api, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+  try{
+    const payload = await getPayload();
+
+    if (id) {
+      await fetch(`${api}/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    } else {
+      await fetch(api, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
   }
 
   resetForm();
-  fetchMovies();
+  fetchPeliculas();
+  } catch (error) {
+    alert('No se pudo guardar la película. Revisa el formato de la imagen.');
+  }
 });
 
 clearBtn.addEventListener('click', () => {
@@ -115,13 +163,13 @@ tbody.addEventListener('click', async (event) => {
     }
 
     await fetch(`${api}/${id}`, { method: 'DELETE' });
-    fetchMovies();
+    fetchPeliculas();
   }
 
   if (action === 'edit') {
     const response = await fetch(`${api}/${id}`);
-    const movie = await response.json();
-    fillForm(movie);
+    const pelicula = await response.json();
+    fillForm(pelicula);
   }
 
   if (action === 'view') {
@@ -129,6 +177,7 @@ tbody.addEventListener('click', async (event) => {
   }
 });
 
-orderBy.addEventListener('change', fetchMovies);
+orderBy.addEventListener('change', fetchPeliculas);
 
-fetchMovies();
+renderCurrentPosterInfo();
+fetchPeliculas();

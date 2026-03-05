@@ -1,45 +1,45 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateMovieDto } from './dto/create-movie.dto';
-import { UpdateMovieDto } from './dto/update-movie.dto';
-import { Movie } from './entities/movie.entity';
-import { MOVIE_REPOSITORY } from './repositories/movie.repository';
-// `MovieRepository` es solo un tipo: usar `import type` evita TS1272 con decorators metadata.
-import type { MovieRepository } from './repositories/movie.repository';
+import { CreatePeliculaDto } from './dto/create-pelicula.dto';
+import { UpdatePeliculaDto } from './dto/update-pelicula.dto';
+import { Pelicula } from './entities/pelicula.entity';
+import { PELICULA_REPOSITORY } from './repositories/pelicula.repository';
+// `PeliculaRepository` es solo un tipo: usar `import type` evita TS1272 con decorators metadata.
+import type { PeliculaRepository } from './repositories/pelicula.repository';
 import {
-  MovieSortStrategy,
+  PeliculaSortStrategy,
   SortByDurationStrategy,
   SortByTitleStrategy,
   SortByYearStrategy,
-} from './strategies/movie-sort.strategy';
+} from './strategies/pelicula-sort.strategy';
 
 @Injectable()
-export class MoviesService {
+export class PeliculasService {
   constructor(
-    @Inject(MOVIE_REPOSITORY)
-    private readonly repository: MovieRepository,
+    @Inject(PELICULA_REPOSITORY)
+    private readonly repository: PeliculaRepository,
   ) {}
 
-  async findAll(orderBy = 'id'): Promise<Movie[]> {
-    const movies = await this.repository.findAll();
+  async findAll(orderBy = 'id'): Promise<Pelicula[]> {
+    const peliculas = await this.repository.findAll();
 
     const strategy = this.getSortStrategy(orderBy);
     if (!strategy) {
-      return movies;
+      return peliculas;
     }
 
-    return strategy.sort(movies);
+    return strategy.sort(peliculas);
   }
 
-  async findOne(id: number): Promise<Movie> {
-    const movie = await this.repository.findById(id);
-    if (!movie) {
+  async findOne(id: number): Promise<Pelicula> {
+    const pelicula = await this.repository.findById(id);
+    if (!pelicula) {
       throw new NotFoundException(`Película ${id} no encontrada`);
     }
 
-    return movie;
+    return pelicula;
   }
 
-  create(dto: CreateMovieDto): Promise<Movie> {
+  create(dto: CreatePeliculaDto): Promise<Pelicula> {
     return this.repository.create({
       title: dto.title,
       director: dto.director,
@@ -52,7 +52,7 @@ export class MoviesService {
     });
   }
 
-  async update(id: number, dto: UpdateMovieDto): Promise<Movie> {
+  async update(id: number, dto: UpdatePeliculaDto): Promise<Pelicula> {
     const updated = await this.repository.update(id, dto);
     if (!updated) {
       throw new NotFoundException(`Película ${id} no encontrada`);
@@ -68,7 +68,7 @@ export class MoviesService {
     }
   }
 
-  private getSortStrategy(orderBy: string): MovieSortStrategy | null {
+  private getSortStrategy(orderBy: string): PeliculaSortStrategy | null {
     switch (orderBy) {
       case 'title':
         return new SortByTitleStrategy();

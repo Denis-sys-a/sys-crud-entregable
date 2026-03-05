@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Movie } from '../entities/movie.entity';
+import { Pelicula } from '../entities/pelicula.entity';
 
 @Injectable()
-export class MovieStore {
+export class PeliculaStore {
   private nextId = 4;
-  private readonly items: Movie[] = [
-    new Movie({
+  private readonly items: Pelicula[] = [
+    new Pelicula({
       id: 1,
       title: 'Interstellar',
       director: 'Christopher Nolan',
@@ -15,7 +15,7 @@ export class MovieStore {
       classification: 'PG-13',
       synopsis: 'Viaje interestelar para salvar la humanidad.',
     }),
-    new Movie({
+    new Pelicula({
       id: 2,
       title: 'Parasite',
       director: 'Bong Joon-ho',
@@ -25,7 +25,7 @@ export class MovieStore {
       classification: 'R',
       synopsis: 'Una familia se infiltra en una casa adinerada.',
     }),
-    new Movie({
+    new Pelicula({
       id: 3,
       title: 'Terminator 2: El Juicio Final',
       director: 'James Cameron',
@@ -37,7 +37,7 @@ export class MovieStore {
     }),
   ];
 
-  list(): Movie[] {
+  list(): Pelicula[] {
     return this.items;
   }
 
