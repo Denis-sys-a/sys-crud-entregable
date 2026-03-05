@@ -1,18 +1,19 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { PeliculasController } from './peliculas.controller';
-import { InMemoryPeliculaRepository } from './repositories/in-memory-pelicula.repository';
-import { PELICULA_REPOSITORY } from './repositories/pelicula.repository';
-import { PeliculaStore } from './repositories/pelicula-store.singleton';
+import { PeliculaOrmEntity } from './entities/pelicula.orm-entity';
 import { PeliculasService } from './peliculas.service';
+import { MySqlPeliculaRepository } from './repositories/mysql-pelicula.repository';
+import { PELICULA_REPOSITORY } from './repositories/pelicula.repository';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([PeliculaOrmEntity])],
   controllers: [PeliculasController],
   providers: [
-    PeliculaStore,
     PeliculasService,
     {
       provide: PELICULA_REPOSITORY,
-      useClass: InMemoryPeliculaRepository,
+      useClass: MySqlPeliculaRepository,
     },
   ],
 })
