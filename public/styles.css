@@ -2,16 +2,24 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(180deg, #4f0808 0%, #230303 22%, #efefef 22%, #efefef 100%);
+  background-color: #0f1115;
+  background-image:
+    linear-gradient(rgba(10, 12, 18, 0.68), rgba(10, 12, 18, 0.68)),
+    url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1600&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: #1d1d1d;
 }
 
 .topbar {
-  background: #4f0808;
-  color: #121212;
+  background: rgba(12, 16, 27, 0.82);
+  color: #f4f7ff;
   padding: 14px 20px;
   text-align: center;
-  border-bottom: 1px solid #2b0303;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(3px);
 }
 .topbar h1 { margin: 0; font-size: 48px; }
 
