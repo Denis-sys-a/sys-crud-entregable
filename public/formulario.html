@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Añadir Película | Sistema CRUD de Películas</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="formulario">
+    <header class="topbar">
+      <h1>Sistema CRUD de Películas</h1>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <h2>Panel</h2>
+        <nav>
+          <a href="/dashboard.html" class="nav-link">📊 Dashboard</a>
+          <a href="/catalogo.html" class="nav-link">🎬 Catálogo</a>
+          <a href="/formulario.html" class="nav-link nav-link-active">➕ Añadir Película</a>
+        </nav>
+      </aside>
+
+      <section class="content">
+        <section id="formulario" class="panel single-panel">
+          <form id="pelicula-form" class="form-panel">
+            <div class="form-header">
+              <h2>Registrar / editar película</h2>
+              <button type="button" id="clear-btn" class="link-btn" title="Cancelar edición y limpiar formulario">↻ Limpiar</button>
+            </div>
+            <input type="hidden" id="pelicula-id" />
+
+            <label>Título <input id="titulo" required /></label>
+            <label>Director <input id="director" required /></label>
+            <label>Género <input id="genero" required /></label>
+
+            <div class="row-2">
+              <label>Año de estreno <input id="anio" type="number" required /></label>
+              <label>Duración (min) <input id="duracionMin" type="number" required /></label>
+            </div>
+
+            <label>
+              Clasificación
+              <select id="clasificacion" required>
+                <option value="">Seleccione</option>
+                <option value="G">G</option>
+                <option value="PG">PG</option>
+                <option value="PG-13">PG-13</option>
+                <option value="R">R</option>
+                <option value="NC-17">NC-17</option>
+              </select>
+            </label>
+
+            <label>Sinopsis <textarea id="sinopsis" rows="4" required></textarea></label>
+            <label>
+              Cartel de la película (opcional)
+              <input id="posterFile" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
+              <small class="hint">Formatos permitidos: JPG, PNG o WEBP.</small>
+              <small id="current-poster" class="hint current-poster"></small>
+            </label>
+
+            <button type="submit" class="primary" id="submit-btn">Guardar película</button>
+          </form>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

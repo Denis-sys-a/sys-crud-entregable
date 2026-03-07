@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | Sistema CRUD de Películas</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="dashboard">
+    <header class="topbar">
+      <h1>Sistema CRUD de Películas</h1>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <h2>Panel</h2>
+        <nav>
+          <a href="/dashboard.html" class="nav-link nav-link-active">📊 Dashboard</a>
+          <a href="/catalogo.html" class="nav-link">🎬 Catálogo</a>
+          <a href="/formulario.html" class="nav-link">➕ Añadir Película</a>
+        </nav>
+      </aside>
+
+      <section class="content">
+        <section id="dashboard" class="panel">
+          <h2>Información General</h2>
+          <div class="metrics-grid">
+            <article class="metric-card">
+              <p class="metric-title">Películas Totales</p>
+              <p id="metric-total" class="metric-value">0</p>
+            </article>
+            <article class="metric-card">
+              <p class="metric-title">Directores Populares</p>
+              <p id="metric-directors" class="metric-value">0</p>
+              <ul id="top-directors" class="mini-list"></ul>
+            </article>
+            <article class="metric-card">
+              <p class="metric-title">Género Más Frecuente</p>
+              <p id="metric-genre" class="metric-value small">—</p>
+            </article>
+            <article class="metric-card">
+              <p class="metric-title">Duración Promedio</p>
+              <p id="metric-duration" class="metric-value">0 min</p>
+            </article>
+          </div>
+
+          <h3>Análisis Visual</h3>
+          <div class="charts-grid">
+            <article class="chart-card">
+              <h4>Distribución por Género</h4>
+              <canvas id="genre-chart" aria-label="Distribución de géneros"></canvas>
+            </article>
+            <article class="chart-card">
+              <h4>Distribución por Clasificación</h4>
+              <canvas id="classification-chart" aria-label="Distribución por clasificación"></canvas>
+            </article>
+            <article class="chart-card full-width">
+              <h4>Películas lanzadas por año</h4>
+              <canvas id="timeline-chart" aria-label="Películas por año"></canvas>
+            </article>
+          </div>
+
+          <div class="tables-grid">
+            <article class="mini-table-card">
+              <h4>Últimas registradas</h4>
+              <table>
+                <thead>
+                  <tr><th>#</th><th>Título</th><th>Director</th><th>Género</th></tr>
+                </thead>
+                <tbody id="latest-body"></tbody>
+              </table>
+            </article>
+            <article class="mini-table-card">
+              <h4>Más antiguas por año</h4>
+              <table>
+                <thead>
+                  <tr><th>#</th><th>Título</th><th>Año</th><th>Clasificación</th></tr>
+                </thead>
+                <tbody id="oldest-body"></tbody>
+              </table>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catálogo | Sistema CRUD de Películas</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="catalogo">
+    <header class="topbar">
+      <h1>Sistema CRUD de Películas</h1>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <h2>Panel</h2>
+        <nav>
+          <a href="/dashboard.html" class="nav-link">📊 Dashboard</a>
+          <a href="/catalogo.html" class="nav-link nav-link-active">🎬 Catálogo</a>
+          <a href="/formulario.html" class="nav-link">➕ Añadir Película</a>
+        </nav>
+      </aside>
+
+      <section class="content">
+        <section id="catalogo" class="panel single-panel">
+          <div class="table-header">
+            <h2>Catálogo de Películas</h2>
+            <select id="order-by">
+              <option value="id">Orden: Inserción</option>
+              <option value="titulo">Orden: Título</option>
+              <option value="anio">Orden: Año</option>
+              <option value="duracion">Orden: Duración</option>
+            </select>
+          </div>
+          <p>Total de películas: <strong id="total">0</strong></p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Título</th>
+                  <th>Director</th>
+                  <th>Género</th>
+                  <th>Año</th>
+                  <th>Duración</th>
+                  <th>Clasificación</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="peliculas-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
