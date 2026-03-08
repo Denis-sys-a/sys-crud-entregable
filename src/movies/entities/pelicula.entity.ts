@@ -10,6 +10,7 @@ export class Pelicula {
   clasificacion: PeliculaClassification;
   sinopsis: string;
   posterUrl?: string;
+  updatedAt?: Date;
 
   constructor(data: Omit<Pelicula, 'id'> & { id?: number }) {
     this.id = data.id ?? 0;
@@ -21,5 +22,6 @@ export class Pelicula {
     this.clasificacion = data.clasificacion;
     this.sinopsis = data.sinopsis;
     this.posterUrl = data.posterUrl;
+    this.updatedAt = data.updatedAt;
   }
 }

@@ -9,6 +9,7 @@ const posterFileInput = document.getElementById('posterFile');
 const currentPosterElement = document.getElementById('current-poster');
 const latestBody = document.getElementById('latest-body');
 const oldestBody = document.getElementById('oldest-body');
+const lastEditedBody = document.getElementById('last-edited-body');
 
 const metricTotal = document.getElementById('metric-total');
 const metricDirectors = document.getElementById('metric-directors');
@@ -106,13 +107,29 @@ function renderDashboard(peliculas) {
   renderCharts(genreCounts, groupBy(peliculas, 'clasificacion'), peliculas);
 }
 
+function formatEditDate(value) {
+  if (!value) {
+    return 'Sin dato';
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return 'Sin dato';
+  }
+
+  return date.toLocaleString('es-ES');
+}
+
 function renderMiniTables(peliculas) {
-  if (!latestBody || !oldestBody) {
+  if (!latestBody || !oldestBody || !lastEditedBody) {
     return;
   }
 
   const latest = [...peliculas].sort((a, b) => b.id - a.id).slice(0, 5);
   const oldest = [...peliculas].sort((a, b) => a.anio - b.anio).slice(0, 5);
+  const lastEdited = [...peliculas]
+  .sort((a, b) => new Date(b.updatedAt || 0).getTime() - new Date(a.updatedAt || 0).getTime())
+  .slice(0, 1);
 
   latestBody.innerHTML = latest
     .map(
@@ -127,6 +144,15 @@ function renderMiniTables(peliculas) {
         `<tr><td>${index + 1}</td><td>${pelicula.titulo}</td><td>${pelicula.anio}</td><td>${pelicula.clasificacion}</td></tr>`,
     )
     .join('');
+
+  lastEditedBody.innerHTML = lastEdited.length
+    ? lastEdited
+        .map(
+          (pelicula) =>
+            `<tr><td>${pelicula.titulo}</td><td>${pelicula.director}</td><td>${formatEditDate(pelicula.updatedAt)}</td></tr>`,
+        )
+        .join('')
+    : '<tr><td colspan="3">Sin datos de edicion</td></tr>';
 }
 
 function buildTimeline(peliculas) {
@@ -172,7 +198,7 @@ function renderCharts(genreCounts, classificationCounts, peliculas) {
     data: {
       labels: genreLabels,
       datasets: [{
-        label: 'Películas por género',
+        label: 'Peliculas por genero',
         data: genreValues,
         backgroundColor: '#2d5b88',
         borderRadius: 6,
@@ -186,7 +212,7 @@ function renderCharts(genreCounts, classificationCounts, peliculas) {
     data: {
       labels: classLabels,
       datasets: [{
-        label: 'Clasificación',
+        label: 'Clasificacion',
         data: classValues,
         backgroundColor: ['#244e75', '#8a1538', '#5f2a7f', '#71717a', '#0f766e'],
       }],
@@ -281,7 +307,7 @@ function fillForm(pelicula) {
 
   currentPosterUrl = pelicula.posterUrl || '';
   renderCurrentPosterInfo();
-  document.getElementById('submit-btn').textContent = 'Actualizar película';
+  document.getElementById('submit-btn').textContent = 'Actualizar pelicula';
 }
 
 function resetForm() {
@@ -298,7 +324,7 @@ function resetForm() {
 
   currentPosterUrl = '';
   renderCurrentPosterInfo();
-  document.getElementById('submit-btn').textContent = 'Guardar película';
+  document.getElementById('submit-btn').textContent = 'Guardar pelicula';
 }
 
 if (form) {
@@ -324,9 +350,9 @@ if (form) {
       }
 
       resetForm();
-      alert('Película guardada correctamente.');
+      alert('Pelicula guardada correctamente.');
     } catch (_error) {
-      alert('No se pudo guardar la película. Revisa el formato de la imagen.');
+      alert('No se pudo guardar la pelicula. Porfavor revisa el formato de la imagen.');
     }
   });
 }
@@ -347,7 +373,7 @@ if (tbody) {
 
     if (action === 'delete') {
       const shouldDelete = window.confirm(
-        '¿Seguro que deseas eliminar esta película?\n\nPresiona "Aceptar" para eliminar o "Cancelar" para mantenerla.',
+        '¿Seguro que deseas eliminar esta pelicula?\n\nPresiona "Aceptar" para eliminar o "Cancelar" para mantenerla.',
       );
       
       if (!shouldDelete) {

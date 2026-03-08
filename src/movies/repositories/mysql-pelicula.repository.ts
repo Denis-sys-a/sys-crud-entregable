@@ -55,6 +55,7 @@ export class MySqlPeliculaRepository implements PeliculaRepository {
       clasificacion: row.clasificacion,
       sinopsis: row.sinopsis,
       posterUrl: row.posterData,
+      updatedAt: row.updatedAt,
     });
   }
 

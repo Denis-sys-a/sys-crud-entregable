@@ -212,6 +212,7 @@ th { color: #114f4f; }
   .layout { grid-template-columns: 1fr; }
   .sidebar { position: static; }
   .metrics-grid { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+  .tables-grid { grid-template-columns: repeat(2, minmax(240px, 1fr)); }
 }
 
 @media (max-width: 860px) {
