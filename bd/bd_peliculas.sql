@@ -1,24 +1,31 @@
 -- Ejecutar este script en MySQL Workbench
-CREATE DATABASE IF NOT EXISTS bd_peliculas
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE  IF NOT EXISTS `bd_peliculas` 
+USE `bd_peliculas`;
 
-USE bd_peliculas;
+DROP TABLE IF EXISTS `peliculas`;
 
-CREATE TABLE IF NOT EXISTS peliculas (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  titulo VARCHAR(255) NOT NULL,
-  director VARCHAR(255) NOT NULL,
-  genero VARCHAR(120) NOT NULL,
-  anio INT NOT NULL,
-  duracion_min INT NOT NULL,
-  clasificacion ENUM('G', 'PG', 'PG-13', 'R', 'NC-17') NOT NULL,
-  sinopsis TEXT NOT NULL,
-  poster_data LONGTEXT NULL,
-  poster_mime_type VARCHAR(50) NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+CREATE TABLE `peliculas` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `director` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `genero` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `anio` int NOT NULL,
+  `duracion_min` int NOT NULL,
+  `clasificacion` enum('G','PG','PG-13','R','NC-17') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sinopsis` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `poster_data` longtext COLLATE utf8mb4_unicode_ci,
+  `poster_mime_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+LOCK TABLES `peliculas` WRITE;
+
+INSERT INTO `peliculas` VALUES (2,'Blade Runner 2049','Denis Villeneuve','Ciencia ficción',2017,163,'NC-17','Treinta años después de la original, el oficial K (Ryan Gosling), un replicante blade runner, descubre un secreto largamente oculto que amenaza con colapsar lo que queda de la sociedad. Este hallazgo lo lleva a buscar a Rick Deckard (Harrison Ford), un blade runner desaparecido hace tres décadas, mientras cuestiona su propia identidad y humanidad.','/img/bladerunner-1772918976284.jpg',NULL,'2026-03-07 21:29:36','2026-03-07 23:30:11'),(3,'Scary Movie','Keenen Ivory Wayans','Comedia',2000,88,'R','Un grupo de adolescentes torpes, liderados por Cindy Campbell, intenta ocultar un crimen del pasado mientras un asesino enmascarado los acosa con chistes absurdos y escatológicos. ','/img/scarymovie-1772919161101.jpg',NULL,'2026-03-07 21:32:41','2026-03-07 23:31:39'),(4,'Shooter: El tirador','Antoine Fuqua','Acción',2007,124,'NC-17','Bob Lee Swagger (Mark Wahlberg), un experto francotirador de los Marines retirado y viviendo en aislamiento, es engañado por el gobierno para evitar un supuesto atentado contra el presidente. Tras ser traicionado, incriminado en el crimen y perseguido por todo el país, usa sus habilidades para limpiar su nombre y desenmascarar una conspiración de alto nivel.','/img/shooter-1772919239245.jpg',NULL,'2026-03-07 21:33:59','2026-03-07 23:33:06'),(5,'Requiem for a Dream','Darren Aronofsky','Drama psicológico',2000,102,'R','Narra el desgarrador descenso a la locura y destrucción física de cuatro personas en Coney Island —Sara, Harry, Marion y Tyrone— a medida que sus adicciones a las drogas y pastillas para adelgazar se profundizan, convirtiendo sus sueños de éxito y felicidad en una pesadilla de aislamiento y miseria.','/img/requiem-1772926488748.jpg',NULL,'2026-03-07 23:34:48','2026-03-07 23:34:48'),(6,'Singles','Cameron Crowe','Comedia romántica',1992,99,'NC-17','Es una comedia romántica ambientada en el Seattle de la era grunge. Sigue la vida amorosa y profesional de un grupo de jóvenes veinteañeros que viven en el mismo edificio, explorando sus búsquedas de amor, estabilidad y éxito profesional en medio de contradicciones personales y confusión.','/img/singles-1772926638308.jpg',NULL,'2026-03-07 23:37:18','2026-03-07 23:37:18'),(7,'Terminator 2: el juicio final','James Cameron','Ciencia ficción',1991,137,'R','Una inteligencia artificial envía al pasado un avanzado cyborg T-1000 para matar al adolescente John Connor. La resistencia envía a un Terminator T-800 reprogramado (Arnold Schwarzenegger) para proteger a John y a su madre, Sarah, mientras intentan evitar la creación de Skynet y el apocalipsis.','/img/images-1-1772926749653.jfif',NULL,'2026-03-07 23:39:09','2026-03-07 23:39:09'),(8,'Gigantes de acero','Shawn Levy','Acción',2011,126,'NC-17','En un futuro cercano donde robots boxeadores reemplazan a los humanos, Charlie Kenton (Hugh Jackman), un promotor fracasado, encuentra una última oportunidad de éxito al entrenar a un robot descartado, \"Atom\", junto a su hijo distanciado. Juntos convierten la chatarra en un contendiente de campeonato.','/img/guerrerosdeacero-1772926884351.jpg',NULL,'2026-03-07 23:41:24','2026-03-07 23:41:24'),(9,'Promesa sangrienta','Ben Ramsey','Acción',2009,90,'R','Isaiah Bone (Michael Jai White), un exconvicto y experto luchador, se adentra en el peligroso circuito de peleas callejeras clandestinas de Los Ángeles. Busca vengar la muerte de un amigo y destruir el imperio criminal local.','/img/unnamed-1772927045680.jpg',NULL,'2026-03-07 23:44:05','2026-03-07 23:44:05'),(10,'Cloverfield: Monstruo','Matt Reeves','Cine de monstruos',2008,85,'R','Durante una fiesta de despedida, un monstruo marino ataca Nueva York, obligando a los protagonistas a intentar rescatar a una amiga mientras la ciudad colapsa.','/img/cloverfield-1772927365114.jpg',NULL,'2026-03-07 23:49:25','2026-03-07 23:49:25'),(11,'Charlie y la fábrica de chocolate','Tim Burton','Ciencia ficción',2005,115,'G','Charlie Bucket, un niño muy pobre, gana uno de los cinco boletos dorados para visitar la misteriosa fábrica de chocolate de Willy Wonka. Junto a otros cuatro niños malcriados que reciben su merecido, Charlie recorre inventos mágicos. Por su honestidad y bondad, Charlie es elegido heredero de la fábrica y su familia. ','/img/charlie-y-la-fabrica-de-chocolate-original-1772927589867.jpg',NULL,'2026-03-07 23:53:09','2026-03-07 23:53:09'),(12,'Mi Vecino Totoro','Hayao Miyazaki','Animación',1988,86,'G','En el Japón rural de los años 50, las hermanas Satsuki y Mei se mudan con su padre para estar cerca de su madre hospitalizada. Descubren criaturas mágicas en su nueva casa y entablan amistad con Totoro, el espíritu guardián del bosque, quien les ayuda a afrontar la situación con esperanza y aventuras mágicas.','/img/1d0ed16201a016ea1b3b3f3b0a0b1f60-1772927794045.jpg',NULL,'2026-03-07 23:56:34','2026-03-07 23:56:34'),(13,'Toy Story','John Lasseter','Animación',1995,81,'PG','Narra la historia de Woody, un vaquero de trapo y el juguete favorito de Andy, cuya posición peligra con la llegada de Buzz Lightyear, una moderna figura espacial que cree ser real. Tras una intensa rivalidad, ambos se pierden y deben trabajar juntos para regresar a casa, superando sus diferencias y convirtiéndose en amigos, mientras enfrentan al malvado vecino Sid.','/img/71apomhl5sl-ac-uf894-1000-ql80-1772927955503.jpg',NULL,'2026-03-07 23:59:15','2026-03-07 23:59:15'),(14,'Batman: El caballero de la noche','Christopher Nolan','Acción',2008,152,'PG-13','Batman (Christian Bale), el teniente Gordon y el fiscal Harvey Dent inician una alianza para desmantelar el crimen organizado en Gotham, pero sus esfuerzos son saboteados por el Joker (Heath Ledger), un anarquista sádico que busca sumergir la ciudad en el caos y corromper al héroe, llevando a Batman a un límite moral y físico.','/img/the-dark-knight-rises-teaser-poster-1772928169434.png',NULL,'2026-03-08 00:02:49','2026-03-08 00:02:49');
+
+UNLOCK TABLES;
 
 --Consulta para ver los campos
 USE bd_peliculas;
