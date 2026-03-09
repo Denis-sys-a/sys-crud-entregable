@@ -1,24 +1,27 @@
 -- Ejecutar este script en MySQL Workbench
-CREATE DATABASE  IF NOT EXISTS `bd_peliculas` 
+CREATE DATABASE  IF NOT EXISTS `bd_peliculas`
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
 USE `bd_peliculas`;
 
 DROP TABLE IF EXISTS `peliculas`;
 
-CREATE TABLE `peliculas` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `director` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `genero` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `anio` int NOT NULL,
-  `duracion_min` int NOT NULL,
-  `clasificacion` enum('G','PG','PG-13','R','NC-17') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sinopsis` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `poster_data` longtext COLLATE utf8mb4_unicode_ci,
-  `poster_mime_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS peliculas (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  titulo VARCHAR(255) NOT NULL,
+  director VARCHAR(255) NOT NULL,
+  genero VARCHAR(120) NOT NULL,
+  anio INT NOT NULL,
+  duracion_min INT NOT NULL,
+  clasificacion ENUM('G', 'PG', 'PG-13', 'R', 'NC-17') NOT NULL,
+  estado ENUM('disponible', 'no disponible') NOT NULL DEFAULT 'disponible',
+  sinopsis TEXT NOT NULL,
+  poster_data LONGTEXT NULL,
+  poster_mime_type VARCHAR(50) NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 
 
 LOCK TABLES `peliculas` WRITE;

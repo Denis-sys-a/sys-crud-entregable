@@ -1,4 +1,5 @@
 export type PeliculaClassification = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
+export type PeliculaEstado = 'disponible' | 'no disponible';
 
 export class Pelicula {
   id: number;
@@ -8,6 +9,7 @@ export class Pelicula {
   anio: number;
   duracionMin: number;
   clasificacion: PeliculaClassification;
+  estado: PeliculaEstado;
   sinopsis: string;
   posterUrl?: string;
   updatedAt?: Date;
@@ -20,6 +22,7 @@ export class Pelicula {
     this.anio = data.anio;
     this.duracionMin = data.duracionMin;
     this.clasificacion = data.clasificacion;
+    this.estado = data.estado;
     this.sinopsis = data.sinopsis;
     this.posterUrl = data.posterUrl;
     this.updatedAt = data.updatedAt;

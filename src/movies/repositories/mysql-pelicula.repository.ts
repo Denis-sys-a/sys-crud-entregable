@@ -53,6 +53,7 @@ export class MySqlPeliculaRepository implements PeliculaRepository {
       anio: row.anio,
       duracionMin: row.duracionMin,
       clasificacion: row.clasificacion,
+      estado: row.estado,
       sinopsis: row.sinopsis,
       posterUrl: row.posterData,
       updatedAt: row.updatedAt,
@@ -70,6 +71,7 @@ export class MySqlPeliculaRepository implements PeliculaRepository {
     if (peliculaData.anio !== undefined) row.anio = peliculaData.anio;
     if (peliculaData.duracionMin !== undefined) row.duracionMin = peliculaData.duracionMin;
     if (peliculaData.clasificacion !== undefined) row.clasificacion = peliculaData.clasificacion;
+    if (peliculaData.estado !== undefined) row.estado = peliculaData.estado;
     if (peliculaData.sinopsis !== undefined) row.sinopsis = peliculaData.sinopsis;
     if (peliculaData.posterUrl !== undefined) row.posterData = peliculaData.posterUrl;
 

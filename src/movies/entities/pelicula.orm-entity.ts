@@ -32,6 +32,13 @@ export class PeliculaOrmEntity {
   })
   clasificacion: 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
 
+  @Column({
+    type: 'enum',
+    enum: ['disponible', 'no disponible'],
+    default: 'disponible',
+  })
+  estado: 'disponible' | 'no disponible';
+
   @Column({ type: 'text' })
   sinopsis: string;
 

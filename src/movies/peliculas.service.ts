@@ -47,6 +47,7 @@ export class PeliculasService {
       anio: dto.anio,
       duracionMin: dto.duracionMin,
       clasificacion: dto.clasificacion,
+      estado: dto.estado,
       sinopsis: dto.sinopsis,
       posterUrl: dto.posterUrl,
     });

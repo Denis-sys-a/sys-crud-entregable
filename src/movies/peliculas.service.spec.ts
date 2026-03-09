@@ -16,6 +16,7 @@ describe('PeliculasService', () => {
       anio,
       duracionMin,
       clasificacion: 'PG-13',
+      estado: 'disponible',
       sinopsis: 'Sinopsis',
       posterUrl: '/img/poster.jpg',
     });
@@ -66,6 +67,7 @@ describe('PeliculasService', () => {
       anio: 2014,
       duracionMin: 169,
       clasificacion: 'PG-13' as const,
+      estado: 'disponible' as const,
       sinopsis: 'Viaje espacial',
       posterUrl: '/img/interstellar.jpg',
     };

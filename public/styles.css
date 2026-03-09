@@ -15,7 +15,7 @@ body {
 
 .topbar {
   background: rgba(12, 16, 27, 0.82);
-  color: #8067ff;
+  color: #f4f7ff;
   padding: 14px 20px;
   text-align: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.14);
@@ -92,6 +92,10 @@ body {
 .metric-title { margin: 0 0 8px; font-weight: 700; }
 .metric-value { margin: 0; font-size: 42px; font-weight: 700; }
 .metric-value.small { font-size: 26px; }
+.metric-value.metric-value-mid { font-size: 52px; line-height: 1; }
+.metric-value.metric-value-small { font-size: 40px; line-height: 1; }
+.metric-label { margin: 8px 0 4px; font-weight: 700; }
+.metric-label-top { margin-top: 16px; }
 .mini-list { margin: 8px 0 0; padding-left: 18px; }
 
 .charts-grid {
@@ -115,7 +119,7 @@ body {
 .tables-grid {
   margin-top: 12px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, minmax(240px, 1fr));
   gap: 12px;
 }
 .mini-table-card {
@@ -199,6 +203,14 @@ th { color: #114f4f; }
   padding: 10px 0;
   border-bottom: 1px solid #c9c9c9;
   line-height: 1.35;
+}
+.estado-disponible {
+  color: #0ca858;
+  font-weight: 800;
+}
+.estado-no-disponible {
+  color: #d32f2f;
+  font-weight: 800;
 }
 .poster-wrap { display: flex; align-items: flex-start; justify-content: center; }
 .poster-wrap img {

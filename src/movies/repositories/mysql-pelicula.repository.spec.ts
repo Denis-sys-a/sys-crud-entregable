@@ -29,6 +29,7 @@ describe('MySqlPeliculaRepository', () => {
         anio: 2014,
         duracionMin: 169,
         clasificacion: 'PG-13',
+        estado: 'disponible',
         sinopsis: 'Viaje',
         posterData: '/img/interstellar.jpg',
       } as PeliculaOrmEntity,
@@ -60,6 +61,7 @@ describe('MySqlPeliculaRepository', () => {
       anio: 1982,
       duracionMin: 117,
       clasificacion: 'R' as const,
+      estado: 'disponible' as const,
       sinopsis: 'Replicantes',
       posterUrl: '/img/br.jpg',
     };

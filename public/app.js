@@ -12,7 +12,8 @@ const oldestBody = document.getElementById('oldest-body');
 const lastEditedBody = document.getElementById('last-edited-body');
 
 const metricTotal = document.getElementById('metric-total');
-const metricDirectors = document.getElementById('metric-directors');
+const metricAvailable = document.getElementById('metric-available');
+const metricUnavailable = document.getElementById('metric-unavailable');
 const metricGenre = document.getElementById('metric-genre');
 const metricDuration = document.getElementById('metric-duration');
 const topDirectorsList = document.getElementById('top-directors');
@@ -28,6 +29,10 @@ function groupBy(list, key) {
     acc[value] = (acc[value] || 0) + 1;
     return acc;
   }, {});
+}
+
+function formatEstado(value) {
+  return (value || '').toString().toLowerCase().trim();
 }
 
 async function fetchPeliculas() {
@@ -80,7 +85,7 @@ function renderPeliculas(peliculas) {
 }
 
 function renderDashboard(peliculas) {
-  if (!metricTotal || !metricDirectors || !metricGenre || !metricDuration || !topDirectorsList) {
+  if (!metricTotal || !metricAvailable || !metricUnavailable || !metricGenre || !metricDuration || !topDirectorsList) {
     return;
   }
 
@@ -88,18 +93,21 @@ function renderDashboard(peliculas) {
 
   const directorCounts = groupBy(peliculas, 'director');
   const sortedDirectors = Object.entries(directorCounts).sort((a, b) => b[1] - a[1]);
-  metricDirectors.textContent = String(Object.keys(directorCounts).length);
-  topDirectorsList.innerHTML = sortedDirectors
-    .slice(0, 3)
-    .map(([director, cantidad]) => `<li>${director}: ${cantidad}</li>`)
-    .join('');
+
+  topDirectorsList.innerHTML = sortedDirectors.length
+    ? `<li>${sortedDirectors[0][0]}: ${sortedDirectors[0][1]}</li>`
+    : '<li>Sin datos</li>';
+
+  const availableCount = peliculas.filter((pelicula) => formatEstado(pelicula.estado) === 'disponible').length;
+  metricAvailable.textContent = String(availableCount);
+  metricUnavailable.textContent = String(peliculas.length - availableCount);
 
   const genreCounts = groupBy(peliculas, 'genero');
   const topGenre = Object.entries(genreCounts).sort((a, b) => b[1] - a[1])[0];
   metricGenre.textContent = topGenre ? `${topGenre[0]} (${topGenre[1]})` : '—';
 
   const avgDuration = peliculas.length
-    ? Math.round(peliculas.reduce((sum, p) => sum + (p.duracionMin || 0), 0) / peliculas.length)
+    ? Math.round(peliculas.reduce((sum, pelicula) => sum + (pelicula.duracionMin || 0), 0) / peliculas.length)
     : 0;
   metricDuration.textContent = `${avgDuration} min`;
 
@@ -128,8 +136,8 @@ function renderMiniTables(peliculas) {
   const latest = [...peliculas].sort((a, b) => b.id - a.id).slice(0, 5);
   const oldest = [...peliculas].sort((a, b) => a.anio - b.anio).slice(0, 5);
   const lastEdited = [...peliculas]
-  .sort((a, b) => new Date(b.updatedAt || 0).getTime() - new Date(a.updatedAt || 0).getTime())
-  .slice(0, 1);
+    .sort((a, b) => new Date(b.updatedAt || 0).getTime() - new Date(a.updatedAt || 0).getTime())
+    .slice(0, 1);
 
   latestBody.innerHTML = latest
     .map(
@@ -152,7 +160,7 @@ function renderMiniTables(peliculas) {
             `<tr><td>${pelicula.titulo}</td><td>${pelicula.director}</td><td>${formatEditDate(pelicula.updatedAt)}</td></tr>`,
         )
         .join('')
-    : '<tr><td colspan="3">Sin datos de edicion</td></tr>';
+    : '<tr><td colspan="3">Sin datos de edición</td></tr>';
 }
 
 function buildTimeline(peliculas) {
@@ -198,7 +206,7 @@ function renderCharts(genreCounts, classificationCounts, peliculas) {
     data: {
       labels: genreLabels,
       datasets: [{
-        label: 'Peliculas por genero',
+        label: 'Películas por género',
         data: genreValues,
         backgroundColor: '#2d5b88',
         borderRadius: 6,
@@ -212,7 +220,7 @@ function renderCharts(genreCounts, classificationCounts, peliculas) {
     data: {
       labels: classLabels,
       datasets: [{
-        label: 'Clasificacion',
+        label: 'Clasificación',
         data: classValues,
         backgroundColor: ['#244e75', '#8a1538', '#5f2a7f', '#71717a', '#0f766e'],
       }],
@@ -282,6 +290,7 @@ async function getPayload() {
     anio: Number(document.getElementById('anio').value),
     duracionMin: Number(document.getElementById('duracionMin').value),
     clasificacion: document.getElementById('clasificacion').value,
+    estado: document.getElementById('estado').value,
     sinopsis: document.getElementById('sinopsis').value,
     posterUrl,
   };
@@ -299,6 +308,7 @@ function fillForm(pelicula) {
   document.getElementById('anio').value = pelicula.anio;
   document.getElementById('duracionMin').value = pelicula.duracionMin;
   document.getElementById('clasificacion').value = pelicula.clasificacion;
+  document.getElementById('estado').value = pelicula.estado || 'disponible';
   document.getElementById('sinopsis').value = pelicula.sinopsis;
 
   if (posterFileInput) {
@@ -317,7 +327,11 @@ function resetForm() {
 
   form.reset();
   document.getElementById('pelicula-id').value = '';
-  
+  const estadoSelect = document.getElementById('estado');
+  if (estadoSelect) {
+    estadoSelect.value = 'disponible';
+  }
+
   if (posterFileInput) {
     posterFileInput.value = '';
   }
@@ -335,24 +349,38 @@ if (form) {
     try {
       const payload = await getPayload();
 
-      if (id) {
-        await fetch(`${api}/${id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-      } else {
-        await fetch(api, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
+      const response = id
+        ? await fetch(`${api}/${id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          })
+        : await fetch(api, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+
+      if (!response.ok) {
+        let message = 'No se pudo guardar la película.';
+        try {
+          const errorData = await response.json();
+          if (errorData?.message) {
+            message = Array.isArray(errorData.message)
+              ? errorData.message.join(', ')
+              : String(errorData.message);
+          }
+        } catch (_jsonError) {
+          // no-op
+        }
+
+        throw new Error(message);
       }
 
       resetForm();
       alert('Pelicula guardada correctamente.');
-    } catch (_error) {
-      alert('No se pudo guardar la pelicula. Porfavor revisa el formato de la imagen.');
+    } catch (error) {
+      alert(error.message || 'No se pudo guardar la película.');
     }
   });
 }

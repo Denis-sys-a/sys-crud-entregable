@@ -14,6 +14,7 @@ const buildMovie = (titulo: string, anio: number, duracionMin: number) =>
     anio,
     duracionMin,
     clasificacion: 'PG',
+    estado: 'disponible',
     sinopsis: 'Sinopsis',
   });
 

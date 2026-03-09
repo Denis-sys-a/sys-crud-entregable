@@ -8,6 +8,10 @@ function getPeliculaIdFromQuery() {
 }
 
 function renderPelicula(pelicula) {
+  const estado = (pelicula.estado || 'no disponible').toLowerCase();
+  const estadoLabel = estado === 'disponible' ? 'DISPONIBLE' : 'NO DISPONIBLE';
+  const estadoClass = estado === 'disponible' ? 'estado-disponible' : 'estado-no-disponible';
+
   detailsInfo.innerHTML = `
     <p><strong>Título:</strong> ${pelicula.titulo}</p>
     <p><strong>Director:</strong> ${pelicula.director}</p>
@@ -16,6 +20,7 @@ function renderPelicula(pelicula) {
     <p><strong>Duración:</strong> ${pelicula.duracionMin} min</p>
     <p><strong>Clasificación:</strong> ${pelicula.clasificacion}</p>
     <p><strong>Sinopsis:</strong> ${pelicula.sinopsis}</p>
+    <p><strong>Estado:</strong> <span class="${estadoClass}">${estadoLabel}</span></p>
   `;
 
   detailsPoster.src = pelicula.posterUrl || 'https://via.placeholder.com/280x420?text=Sin+poster';
@@ -36,7 +41,7 @@ async function loadPelicula() {
     }
     const pelicula = await response.json();
     renderPelicula(pelicula);
-  } catch (error) {
+  } catch (_error) {
     detailsInfo.innerHTML = '<p>No se pudo cargar la información de la película.</p>';
     detailsPoster.style.display = 'none';
   }

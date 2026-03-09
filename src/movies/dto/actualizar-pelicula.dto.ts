@@ -1,6 +1,7 @@
-import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import { IsIn, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 
 type PeliculaClassificationDto = 'G' | 'PG' | 'PG-13' | 'R' | 'NC-17';
+type PeliculaEstadoDto = 'disponible' | 'no disponible';
 
 export class UpdatePeliculaDto {
   @IsOptional()
@@ -30,6 +31,11 @@ export class UpdatePeliculaDto {
   @IsOptional()
   @IsString()
   clasificacion?: PeliculaClassificationDto;
+
+  @IsOptional()
+  @IsString()
+  @IsIn(['disponible', 'no disponible'])
+  estado?: PeliculaEstadoDto;
 
   @IsOptional()
   @IsString()
